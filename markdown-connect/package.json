@@ -11,7 +11,8 @@
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "typescript": "~5.8.3",
-    "vite": "^7.0.4"
+    "vite": "^7.0.6",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
     "d3": "^7.9.0",
