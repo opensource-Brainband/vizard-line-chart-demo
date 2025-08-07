@@ -2,8 +2,8 @@
 This is for testing line chart.
 
 ## Goal
-### Mermaid
-```Mermaid
-graph TD
+### mermaid
+```mermaid
+graph LR
   data --> chart
 ```
