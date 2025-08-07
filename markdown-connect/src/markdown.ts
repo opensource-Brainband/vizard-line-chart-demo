@@ -4,6 +4,7 @@ import type Token from 'markdown-it/lib/token.mjs'
 import parseDSL from './parseDSL'
 
 export function createMarkdownRenderer(): MarkdownIt {
+
   const md = new MarkdownIt()
 
   const defaultFence = md.renderer.rules.fence!
@@ -12,7 +13,7 @@ export function createMarkdownRenderer(): MarkdownIt {
     const token = tokens[idx]
     const langName = token.info.trim()
 
-    if (langName === 'dsl') {
+    if (langName === 'vizard') {
       const parsed = parseDSL(token.content)
 
       // DSL 코드 원본 출력
