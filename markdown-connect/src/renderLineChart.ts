@@ -4,43 +4,94 @@ type Datum = Record<string, string | number>
 
 interface LineChartData {
   title?: string
-  x: string         // x축으로 사용할 속성 이름
-  y: string         // y축으로 사용할 속성 이름
-  data: Datum[]     // 데이터 배열 (각 항목은 string | number 값 가짐)
+  x: string
+  y: string
+  data: Datum[]
 }
 
 export function renderLineChart(container: HTMLElement, chartData: LineChartData) {
-  console.log('[DEBUG] renderLineChart 호출됨:', chartData)  // ✅ 여기 추가
   const { title, x, y, data } = chartData
 
   const width = 400
-  const height = 200
+  const height = 250
+  const margin = { top: 40, right: 20, bottom: 40, left: 50 }
 
   const svg = d3.select(container)
     .append('svg')
     .attr('width', width)
     .attr('height', height)
 
+  // 제목
+  if (title) {
+    svg.append('text')
+      .attr('x', width / 2)
+      .attr('y', margin.top / 2)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', '16px')
+      .attr('font-weight', 'bold')
+      .text(title)
+  }
+
+  const chartWidth = width - margin.left - margin.right
+  const chartHeight = height - margin.top - margin.bottom
+
+  const chartArea = svg.append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`)
+
+  const xDomain = data.map(d => String(d[x]))
+  const yMax = d3.max(data, d => Number(d[y])) ?? 100
+
   const xScale = d3.scalePoint<string>()
-    .domain(data.map(d => String(d[x])))
-    .range([40, width - 20])
+    .domain(xDomain)
+    .range([0, chartWidth])
+    .padding(0.5)
 
   const yScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => Number(d[y])) ?? 100])
-    .range([height - 30, 10])
+    .domain([0, yMax])
+    .range([chartHeight, 0])
+
+  // X축
+  const xAxis = d3.axisBottom(xScale)
+
+  chartArea.append('g')
+    .attr('transform', `translate(0, ${chartHeight})`)
+    .call(xAxis)
+
+  // Y축
+  const yAxis = d3.axisLeft(yScale).ticks(5)
+
+  chartArea.append('g')
+    .call(yAxis)
+
+  // X축 라벨
+  chartArea.append('text')
+    .attr('x', chartWidth / 2)
+    .attr('y', chartHeight + 30)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '12px')
+    .text(x)
+
+  // Y축 라벨
+  chartArea.append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('x', -chartHeight / 2)
+    .attr('y', -35)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '12px')
+    .text(y)
 
   const line = d3.line<Datum>()
     .x(d => xScale(String(d[x]))!)
     .y(d => yScale(Number(d[y])))
 
-  svg.append('path')
+  chartArea.append('path')
     .datum(data)
     .attr('fill', 'none')
     .attr('stroke', '#0077cc')
     .attr('stroke-width', 2)
     .attr('d', line)
 
-  svg.selectAll('circle')
+  chartArea.selectAll('circle')
     .data(data)
     .enter()
     .append('circle')
