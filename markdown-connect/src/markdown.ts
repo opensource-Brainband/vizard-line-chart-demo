@@ -1,43 +1,37 @@
+// src/markdown.ts
 import MarkdownIt from 'markdown-it'
-import parseDSL from './parseDSL'
-
 import type Token from 'markdown-it/lib/token.mjs'
-import type Renderer from 'markdown-it/lib/renderer.mjs'
-
-interface FenceCustomRule {
-  [key: string]: (...args: any[]) => string
-}
-
-declare module 'markdown-it/lib/renderer.mjs' {
-  interface RenderRuleRecord {
-    fence_custom?: FenceCustomRule
-  }
-}
-
+import parseDSL from './parseDSL'
 
 export function createMarkdownRenderer(): MarkdownIt {
   const md = new MarkdownIt()
 
-  const customRules = (md.renderer.rules.fence_custom ||= {})
+  const defaultFence = md.renderer.rules.fence!
 
-  // DSL 전용 코드 블럭 렌더링 정의
-  customRules['dsl'] = (
-    tokens: Token[],
-    idx: number,
-    options,
-    env,
-    self: Renderer
-  ): string => {
-    const content = tokens[idx].content
-    const parsed = parseDSL(content)
+  md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+    const token = tokens[idx]
+    const langName = token.info.trim()
 
-    if (parsed.type === 'line') {
-      const id = `chart-${Math.random().toString(36).slice(2)}`
-      const encoded = encodeURIComponent(JSON.stringify(parsed))
-      return `<div class="dsl-chart" id="${id}" data-chart="${encoded}"></div>`
+    if (langName === 'dsl') {
+      const parsed = parseDSL(token.content)
+
+      // DSL 코드 원본 출력
+      const codeHtml = `<pre><code class="language-dsl">${md.utils.escapeHtml(token.content)}</code></pre>`
+
+      // DSL 차트 출력
+      if (parsed.type === 'line') {
+        const id = `chart-${Math.random().toString(36).slice(2)}`
+        const encoded = encodeURIComponent(JSON.stringify(parsed))
+        const chartHtml = `<div class="dsl-chart" id="${id}" data-chart="${encoded}"></div>`
+
+        // 코드 + 차트 둘 다 보여주기
+        return `${codeHtml}\n${chartHtml}`
+      }
+
+      return codeHtml
     }
 
-    return `<pre><code>${md.utils.escapeHtml(content)}</code></pre>`
+    return defaultFence(tokens, idx, options, env, self)
   }
 
   return md

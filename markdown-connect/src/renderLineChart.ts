@@ -10,6 +10,7 @@ interface LineChartData {
 }
 
 export function renderLineChart(container: HTMLElement, chartData: LineChartData) {
+  console.log('[DEBUG] renderLineChart 호출됨:', chartData)  // ✅ 여기 추가
   const { title, x, y, data } = chartData
 
   const width = 400
