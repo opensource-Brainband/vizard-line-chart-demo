@@ -19,7 +19,7 @@ export function createMarkdownRenderer(): MarkdownIt {
 
       // DSL 차트 출력
       if (parsed.type === 'line') {
-        const id = `chart-${Math.random().toString(36).slice(2)}`
+        const id = `chart-${Math.random().toString(36).slice(2)}` // 같은 md 파일 내에서 여러 개 렌더링
         const encoded = encodeURIComponent(JSON.stringify(parsed))
         const chartHtml = `<div class="dsl-chart" id="${id}" data-chart="${encoded}"></div>`
 
