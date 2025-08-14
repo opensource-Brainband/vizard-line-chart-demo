@@ -1,9 +1,8 @@
 export interface ParsedCSV {
   title: string
   type: string
-  x: string
-  y: string
-  data: Record<string, string | number>[]
+  headers: string[]
+  data: Record<string, (string | number)>[]
 }
 
 export default function parseCSV(
@@ -31,23 +30,16 @@ export default function parseCSV(
     throw new Error('CSV 헤더는 최소 2개 컬럼이 필요합니다.')
   }
 
-  const [x, y] = headers
   const data = lines.slice(1).map(line => {
-    const [xVal, yVal] = line.split(',').map(v => v.trim())
-    return {
-      [x]: xVal,
-      [y]: isNaN(Number(yVal)) ? yVal : Number(yVal)
-    }
+  const values = line.split(',').map(v => v.trim())
+  
+  return headers.reduce((obj, header, idx) => {
+    const raw = values[idx]
+    // 숫자로 변환 가능한 값이면 number, 아니면 string
+    obj[header] = isNaN(Number(raw)) || raw === '' ? raw : Number(raw)
+    return obj
+  }, {} as Record<string, string | number>)
   })
 
-  // const [x, y] = headers
-  // const data = lines.slice(1).map(line => {
-  //   const [xVal, yVal] = line.split(',').map(v => v.trim())
-  //   return {
-  //     [x]: xVal,
-  //     [y]: isNaN(Number(yVal)) ? yVal : Number(yVal)
-  //   }
-  // })
-
-  return { title, type, x, y, data }
+  return { title, type, headers, data }
 }

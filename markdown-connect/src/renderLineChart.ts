@@ -4,13 +4,13 @@ type Datum = Record<string, string | number>
 
 interface LineChartData {
   title?: string
-  x: string
-  y: string
-  data: Datum[]
+  headers: string[]
+  data: Record<string, (string | number)>[]
 }
 
 export function renderLineChart(container: HTMLElement, chartData: LineChartData) {
-  const { title, x, y, data } = chartData
+  const { title, headers, data } = chartData
+  const [x, y] = headers
 
   const width = 400
   const height = 250

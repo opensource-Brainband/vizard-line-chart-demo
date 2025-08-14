@@ -4,13 +4,13 @@ type Datum = Record<string, string | number>
 
 interface BarChartData {
   title?: string
-  x: string
-  y: string
+  headers: string[]
   data: Datum[]
 }
 
 export function renderBarChart(container: HTMLElement, chartData: BarChartData) {
-  const { title, x, y, data } = chartData
+  const { title, headers, data } = chartData
+  const [x, y] = headers
 
   const width = 400
   const height = 250

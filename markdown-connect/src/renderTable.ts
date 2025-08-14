@@ -1,18 +1,14 @@
-type Datum = Record<string, string | number>
-
 interface TableData {
   title?: string
-  x: string
-  y: string
-  data: Datum[]
+  headers: string[]
+  data: Record<string, (string | number)>[]
 }
 
 export function renderTable(container: HTMLElement, tableData: TableData) {
 
   console.log("table")
 
-  const { title, x, y, data } = tableData
-  const columns = [x, y]
+  const { title, headers, data } = tableData
 
   if (title) {
     const h3 = document.createElement('h3')
@@ -27,13 +23,15 @@ export function renderTable(container: HTMLElement, tableData: TableData) {
   // 헤더
   const thead = document.createElement('thead')
   const headerRow = document.createElement('tr')
-  columns.forEach(col => {
+  headers.forEach(col => {
     const th = document.createElement('th')
     th.textContent = col
     th.style.border = '1px solid #ccc'
     th.style.padding = '4px'
     th.style.backgroundColor = '#f5f5f5'
     headerRow.appendChild(th)
+
+    console.log(col)
   })
   thead.appendChild(headerRow)
   table.appendChild(thead)
@@ -42,9 +40,10 @@ export function renderTable(container: HTMLElement, tableData: TableData) {
   const tbody = document.createElement('tbody')
   data.forEach(row => {
     const tr = document.createElement('tr')
-    columns.forEach(col => {
+    headers.forEach(column => {
       const td = document.createElement('td')
-      td.textContent = String(row[col] ?? '')
+      td.textContent = String(row[column])
+      // td.textContent = String(cell ?? 'k')
       td.style.border = '1px solid #ccc'
       td.style.padding = '4px'
       tr.appendChild(td)
