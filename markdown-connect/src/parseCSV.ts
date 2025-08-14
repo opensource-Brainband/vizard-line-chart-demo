@@ -9,7 +9,7 @@ export default function parseCSV(
   content: string,
   info: string
 ): ParsedCSV {
-  // info에서 title, type 추출
+  // Extract title and type from info
   const titleMatch = info.match(/title="([^"]+)"/)
   const typeMatch = info.match(/type="([^"]+)"/)
 
@@ -22,12 +22,12 @@ export default function parseCSV(
     .filter(Boolean)
 
   if (lines.length < 2) {
-    throw new Error('CSV 데이터가 비어있습니다.')
+    throw new Error('CSV data is empty.')
   }
 
   const headers = lines[0].split(',').map(h => h.trim())
   if (headers.length < 2) {
-    throw new Error('CSV 헤더는 최소 2개 컬럼이 필요합니다.')
+    throw new Error('CSV header requires at least 2 columns.')
   }
 
   const data = lines.slice(1).map(line => {
@@ -35,8 +35,8 @@ export default function parseCSV(
   
   return headers.reduce((obj, header, idx) => {
     const raw = values[idx]
-    // 숫자로 변환 가능한 값이면 number, 아니면 string
-    obj[header] = isNaN(Number(raw)) || raw === '' ? raw : Number(raw)
+  // If value can be converted to number, use number. otherwise, use string
+  obj[header] = isNaN(Number(raw)) || raw === '' ? raw : Number(raw)
     return obj
   }, {} as Record<string, string | number>)
   })

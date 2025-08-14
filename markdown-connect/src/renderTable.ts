@@ -6,8 +6,6 @@ interface TableData {
 
 export function renderTable(container: HTMLElement, tableData: TableData) {
 
-  console.log("table")
-
   const { title, headers, data } = tableData
 
   if (title) {
@@ -20,7 +18,7 @@ export function renderTable(container: HTMLElement, tableData: TableData) {
   table.style.borderCollapse = 'collapse'
   table.style.width = '100%'
 
-  // 헤더
+  // Header
   const thead = document.createElement('thead')
   const headerRow = document.createElement('tr')
   headers.forEach(col => {
@@ -36,14 +34,13 @@ export function renderTable(container: HTMLElement, tableData: TableData) {
   thead.appendChild(headerRow)
   table.appendChild(thead)
 
-  // 본문
+  // Body
   const tbody = document.createElement('tbody')
   data.forEach(row => {
     const tr = document.createElement('tr')
     headers.forEach(column => {
       const td = document.createElement('td')
       td.textContent = String(row[column])
-      // td.textContent = String(cell ?? 'k')
       td.style.border = '1px solid #ccc'
       td.style.padding = '4px'
       tr.appendChild(td)

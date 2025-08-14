@@ -1,4 +1,4 @@
-/* 기본 스타일: 페이지 전체 */
+/* Base style: entire page */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -10,7 +10,7 @@ body {
   background-color: #f4f4f4;
 }
 
-/* #app: 전체 앱을 감싸는 컨테이너 */
+/* #app: container wrapping the entire app */
 #app {
   max-width: 1500px;
   padding: 20px;
@@ -19,7 +19,7 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* 마크다운 텍스트 스타일 */
+/* Markdown text style */
 h1, h2, h3, h4, h5, h6 {
   color: #333;
   margin-top: 20px;
@@ -36,12 +36,12 @@ code {
   padding: 0 5px;
 }
 
-/* .dsl-chart: 차트를 렌더링할 공간 스타일 */
+/* .dsl-chart: area for rendering charts */
 .dsl-chart {
   margin-top: 20px;
 }
 
-/* SVG 차트 스타일 */
+/* SVG chart style */
 svg {
   display: block;
   margin: 0 auto;
