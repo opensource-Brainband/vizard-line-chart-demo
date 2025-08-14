@@ -87,7 +87,7 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
   chartArea.append('path')
     .datum(data)
     .attr('fill', 'none')
-    .attr('stroke', '#0077cc')
+    .attr('stroke', '#21203C')
     .attr('stroke-width', 2)
     .attr('d', line)
 
@@ -98,5 +98,5 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .attr('cx', d => xScale(String(d[x]))!)
     .attr('cy', d => yScale(Number(d[y])))
     .attr('r', 3)
-    .attr('fill', '#0077cc')
+    .attr('fill', '#00C2A0')
 }

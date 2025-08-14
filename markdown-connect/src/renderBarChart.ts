@@ -21,6 +21,23 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('width', width)
     .attr('height', height)
 
+  // 그라데이션 정의 추가
+  const defs = svg.append('defs')
+  const gradient = defs.append('linearGradient')
+    .attr('id', 'bar-gradient')
+    .attr('x1', '0%')
+    .attr('y1', '100%')
+    .attr('x2', '0%')
+    .attr('y2', '0%')
+  gradient.append('stop')
+    .attr('offset', '0%')
+    .attr('stop-color', '#21203C')
+    .attr('stop-opacity', 1)
+  gradient.append('stop')
+    .attr('offset', '100%')
+    .attr('stop-color', '#6B6A8A') 
+    .attr('stop-opacity', 1)
+
   // 제목
   if (title) {
     svg.append('text')
@@ -86,5 +103,5 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('y', d => yScale(Number(d[y])))
     .attr('width', xScale.bandwidth())
     .attr('height', d => chartHeight - yScale(Number(d[y])))
-    .attr('fill', '#0077cc')
+  .attr('fill', 'url(#bar-gradient)')
 }
