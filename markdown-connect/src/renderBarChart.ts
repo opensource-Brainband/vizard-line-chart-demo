@@ -21,7 +21,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('width', width)
     .attr('height', height)
 
-  // 그라데이션 정의 추가
+  // Add gradient definition
   const defs = svg.append('defs')
   const gradient = defs.append('linearGradient')
     .attr('id', 'bar-gradient')
@@ -38,7 +38,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('stop-color', '#6B6A8A') 
     .attr('stop-opacity', 1)
 
-  // 제목
+  // Title
   if (title) {
     svg.append('text')
       .attr('x', width / 2)
@@ -67,16 +67,16 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .domain([0, yMax])
     .range([chartHeight, 0])
 
-  // X축
+  // X axis
   chartArea.append('g')
     .attr('transform', `translate(0, ${chartHeight})`)
     .call(d3.axisBottom(xScale))
 
-  // Y축
+  // Y axis
   chartArea.append('g')
     .call(d3.axisLeft(yScale).ticks(5))
 
-  // X축 라벨
+  // X axis label
   chartArea.append('text')
     .attr('x', chartWidth / 2)
     .attr('y', chartHeight + 30)
@@ -84,7 +84,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('font-size', '12px')
     .text(x)
 
-  // Y축 라벨
+  // Y axis label
   chartArea.append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -chartHeight / 2)
@@ -93,7 +93,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('font-size', '12px')
     .text(y)
 
-  // 바 그리기
+  // Draw bars
   chartArea.selectAll('.bar')
     .data(data)
     .enter()

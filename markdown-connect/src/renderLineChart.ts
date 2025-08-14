@@ -21,7 +21,7 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .attr('width', width)
     .attr('height', height)
 
-  // 제목
+  // Title
   if (title) {
     svg.append('text')
       .attr('x', width / 2)
@@ -50,20 +50,20 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .domain([0, yMax])
     .range([chartHeight, 0])
 
-  // X축
+  // X axis
   const xAxis = d3.axisBottom(xScale)
 
   chartArea.append('g')
     .attr('transform', `translate(0, ${chartHeight})`)
     .call(xAxis)
 
-  // Y축
+  // Y axis
   const yAxis = d3.axisLeft(yScale).ticks(5)
 
   chartArea.append('g')
     .call(yAxis)
 
-  // X축 라벨
+  // X axis label
   chartArea.append('text')
     .attr('x', chartWidth / 2)
     .attr('y', chartHeight + 30)
@@ -71,7 +71,7 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .attr('font-size', '12px')
     .text(x)
 
-  // Y축 라벨
+  // Y axis label
   chartArea.append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -chartHeight / 2)

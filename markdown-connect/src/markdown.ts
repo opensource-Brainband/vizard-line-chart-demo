@@ -13,15 +13,17 @@ export function createMarkdownRenderer(): MarkdownIt {
     if (langName === 'csv') {
       const parsed = parseCSV(token.content, info)
 
-      // 코드 원본 HTML
-      const codeHtml = `<pre><code class="language-csv">${md.utils.escapeHtml(token.content)}</code></pre>`
 
-      // type이 존재하는 경우에만 차트 생성
-      // if (parsed.type === 'line' || parsed.type === 'bar' || parsed.type === "table") {
-      return `${codeHtml}\n${generateChartHtml(parsed)}`
-      // }
 
-      // return codeHtml
+    // Original code block HTML
+    const codeHtml = `<pre><code class="language-csv">${md.utils.escapeHtml(token.content)}</code></pre>`
+
+    // Generate chart only if type exists
+    // if (parsed.type === 'line' || parsed.type === 'bar' || parsed.type === "table") {
+    return `${codeHtml}\n${generateChartHtml(parsed)}`
+    // }
+
+    // return codeHtml
     }
 
     return defaultFence(tokens, idx, options, env, self)
@@ -34,7 +36,7 @@ function generateChartHtml(parsed: any) {
   const id = `chart-${Math.random().toString(36).slice(2)}`
   const encoded = encodeURIComponent(JSON.stringify(parsed))
 
-  // 차트 타입, table 타입 구분
+  // Distinguish chart type and table type
   return `<div 
             class="dsl-chart" 
             id="${id}" 
