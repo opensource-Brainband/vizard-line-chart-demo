@@ -12,7 +12,7 @@ body {
 
 /* #app: 전체 앱을 감싸는 컨테이너 */
 #app {
-  max-width: 800px;
+  max-width: 1500px;
   padding: 20px;
   background-color: white;
   border-radius: 8px;

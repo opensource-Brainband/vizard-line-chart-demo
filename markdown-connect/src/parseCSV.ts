@@ -40,5 +40,14 @@ export default function parseCSV(
     }
   })
 
+  // const [x, y] = headers
+  // const data = lines.slice(1).map(line => {
+  //   const [xVal, yVal] = line.split(',').map(v => v.trim())
+  //   return {
+  //     [x]: xVal,
+  //     [y]: isNaN(Number(yVal)) ? yVal : Number(yVal)
+  //   }
+  // })
+
   return { title, type, x, y, data }
 }
