@@ -78,6 +78,19 @@ code {
 /* .dsl-chart: area for rendering charts */
 .dsl-chart {
   margin-top: 20px;
+  width: 600px;
+  min-width: 600px;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.dsl-chart svg,
+.dsl-chart table {
+  display: block;
+  min-width: 600px;
+  box-sizing: border-box;
 }
 
 /* SVG chart style */
