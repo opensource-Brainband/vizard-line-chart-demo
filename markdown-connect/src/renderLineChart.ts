@@ -12,14 +12,18 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
   const { title, headers, data } = chartData
   const [x, y] = headers
 
-  const width = 600
-  const height = 250
-  const margin = { top: 40, right: 20, bottom: 40, left: 50 }
+  // x 데이터 중 최대 길이 계산
+  const maxXLen = Math.max(...data.map(d => String(d[x]).length));
+  // 한 글자당 12px, 최소 10px, 최대 180px
+  const minPointGap = Math.max(10, Math.min(7 * maxXLen, 180));
+  const margin = { top: 40, right: 20, bottom: 40, left: 50 };
+  const width = Math.max(600, margin.left + margin.right + data.length * minPointGap);
+  const height = 250;
 
   const svg = d3.select(container)
     .append('svg')
     .attr('width', width)
-    .attr('height', height)
+    .attr('height', height);
 
   // Title
   if (title) {
@@ -32,23 +36,23 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
       .text(title)
   }
 
-  const chartWidth = width - margin.left - margin.right
-  const chartHeight = height - margin.top - margin.bottom
+  const chartWidth = width - margin.left - margin.right;
+  const chartHeight = height - margin.top - margin.bottom;
 
   const chartArea = svg.append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`)
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-  const xDomain = data.map(d => String(d[x]))
-  const yMax = d3.max(data, d => Number(d[y])) ?? 100
+  const xDomain = data.map(d => String(d[x]));
+  const yMax = d3.max(data, d => Number(d[y])) ?? 100;
 
   const xScale = d3.scalePoint<string>()
     .domain(xDomain)
     .range([0, chartWidth])
-    .padding(0.5)
+    .padding(0.5);
 
   const yScale = d3.scaleLinear()
     .domain([0, yMax])
-    .range([chartHeight, 0])
+    .range([chartHeight, 0]);
 
   // X axis
   const xAxis = d3.axisBottom(xScale)
