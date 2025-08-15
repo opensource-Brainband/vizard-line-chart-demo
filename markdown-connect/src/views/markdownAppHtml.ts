@@ -1,18 +1,24 @@
 export const getMarkdownAppHtml = (markdownText: string) => `
-  <div style="width: 100vw; min-height: 100vh; background: white; overflow: hidden; flex-direction: column; align-items: center; display: flex">
-    <div style="align-self: stretch; height: 80px; padding: 20px; background: #21203C; overflow: hidden; justify-content: space-between; align-items: center; display: flex">
+  <div id="vizard-root" style="width: 100vw; min-height: 100vh; background: white; overflow: hidden; position: relative;">
+    <!-- Sidebar -->
+    <div id="sidebar" style="position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #232336; color: #fff; z-index: 200; display: flex; flex-direction: column; align-items: flex-start; padding-top: 32px; padding-left: 24px; box-shadow: 2px 0 16px rgba(0,0,0,0.08); transform: translateX(-100%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);">
+      <div style="font-size: 28px; font-weight: 700; margin-bottom: 32px; letter-spacing: 2px;">MENU</div>
+      <span id="csv-upload-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Upload CSV file</span>
+      <input type="file" id="csv-upload-input" accept=".csv" style="display:none;" />
+      <span id="md-upload-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Upload Markdown file</span>
+      <input type="file" id="md-upload-input" accept=".md,.markdown,text/markdown" style="display:none;" />
+      <span id="clear-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Clear data</span>
+      <span id="sidebar-close" style="margin-top: 32px; color: #bbb; font-size: 22px; cursor: pointer;">&times; Close</span>
+    </div>
+    <!-- Topbar -->
+    <div style="align-self: stretch; height: 80px; padding: 20px; background: #21203C; overflow: hidden; justify-content: flex-start; align-items: center; display: flex; position: relative; z-index: 101;">
+      <span id="menu-icon" style="font-size: 32px; color: #fff; cursor: pointer; user-select: none; margin-right: 24px;">&#9776;</span>
       <div style="color: white; font-size: 32px; font-family: Pretendard, sans-serif; word-wrap: break-word">
         <span style="font-weight: 500;">Vizard</span> <span style="font-weight: 300;">Editor</span>
       </div>
-  <div style="display: flex; align-items: center; gap: 36px; font-size: 16px;">
-        <span id="csv-upload-text" style="color: #fff; cursor: pointer; font-size: 20px;">Upload CSV file</span>
-        <input type="file" id="csv-upload-input" accept=".csv" style="display:none;" />
-        <span id="md-upload-text" style="color: #fff; cursor: pointer; font-size: 20px;">Upload Markdown file</span>
-        <input type="file" id="md-upload-input" accept=".md,.markdown,text/markdown" style="display:none;" />
-        <span id="clear-data-text" style="color: #fff; cursor: pointer; font-size: 20px;">Clear data</span>
-      </div>
     </div>
-    <div style="flex: 1 1 0; width: 100%; max-width: 1440px; margin: 0 auto; display: flex; align-items: stretch; justify-content: center; background: white;">
+    <!-- Main Content -->
+    <div id="main-content" style="flex: 1 1 0; width: 100%; max-width: 1440px; margin: 0 auto; display: flex; align-items: stretch; justify-content: center; background: white; transition: transform 0.3s cubic-bezier(.4,0,.2,1);">
       <!-- Editor Area -->
       <div style="flex: 1 1 0; min-width: 0; background: #3D3D3D; display: flex; flex-direction: column; align-items: center;">
         <div style="align-self: stretch; height: 60px; padding-left: 20px; padding-right: 20px; background: white; display: flex; align-items: center; flex-direction: row; justify-content: space-between;">

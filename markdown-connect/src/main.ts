@@ -22,6 +22,45 @@ function renderWelcome(root: HTMLElement) {
 // Render the markdown editor/preview UI
 function renderMarkdownApp(root: HTMLElement) {
   root.innerHTML = getMarkdownAppHtml(markdownText)
+  // Sidebar elements
+  const sidebar = document.getElementById('sidebar')
+  const menuIcon = document.getElementById('menu-icon')
+  const sidebarClose = document.getElementById('sidebar-close')
+  const mainContent = document.getElementById('main-content')
+  // Overlay for closing sidebar on outside click
+  let overlay: HTMLDivElement | null = null
+
+  // Sidebar open/close logic
+  function openSidebar() {
+    if (sidebar) sidebar.style.transform = 'translateX(0)';
+    if (mainContent) mainContent.style.transform = 'translateX(260px)';
+    // Add overlay
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'sidebar-overlay';
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.background = 'rgba(0,0,0,0.15)';
+      overlay.style.zIndex = '150';
+      overlay.addEventListener('click', closeSidebar);
+      document.body.appendChild(overlay);
+    }
+  }
+  function closeSidebar() {
+    if (sidebar) sidebar.style.transform = 'translateX(-100%)';
+    if (mainContent) mainContent.style.transform = '';
+    if (overlay) {
+      overlay.remove();
+      overlay = null;
+    }
+  }
+  if (menuIcon) menuIcon.addEventListener('click', openSidebar);
+  if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+
+  // Editor/preview/file upload logic
   const textarea = document.getElementById('md-editor') as HTMLTextAreaElement | null
   const preview = document.getElementById('app-preview')
   const csvText = document.getElementById('csv-upload-text') as HTMLSpanElement | null

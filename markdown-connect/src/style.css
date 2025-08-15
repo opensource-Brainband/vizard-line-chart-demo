@@ -19,6 +19,37 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Sidebar and overlay styles */
+#sidebar {
+  box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 200;
+}
+#sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.15);
+  z-index: 150;
+}
+#main-content {
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 100;
+}
+
+@media (max-width: 700px) {
+  #sidebar {
+    width: 80vw !important;
+    min-width: 0 !important;
+    padding-left: 10vw !important;
+  }
+  #main-content {
+    max-width: 100vw !important;
+  }
+}
+
 /* Markdown text style */
 h1, h2, h3, h4, h5, h6 {
   color: #333;
