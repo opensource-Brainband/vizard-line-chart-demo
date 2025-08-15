@@ -7,6 +7,7 @@ import markdownText from '../docs/test.md?raw'
 import { welcomeHtml } from './views/welcomeHtml'
 import { getMarkdownAppHtml } from './views/markdownAppHtml'
 import { showHowToUseModal } from './utils/showHowToUseModal'
+import { showExportModal } from './utils/showExportModal'
 
 const md = createMarkdownRenderer()
 
@@ -76,20 +77,37 @@ function renderMarkdownApp(root: HTMLElement) {
   const clearText = document.getElementById('clear-data-text') as HTMLSpanElement | null
   const exportText = document.getElementById('export-data-text') as HTMLSpanElement | null
 
-  // Export markdown as .md file
+  // Export: show modal to select format
   if (exportText && textarea) {
     exportText.addEventListener('click', () => {
-      const blob = new Blob([textarea.value], { type: 'text/markdown' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'vizard-export.md';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 0);
+      showExportModal((type) => {
+        let blob: Blob, filename: string;
+        if (type === 'md') {
+          blob = new Blob([textarea.value], { type: 'text/markdown' });
+          filename = 'vizard-export.md';
+        } else if (type === 'html') {
+          // Use markdown-it renderer for HTML
+          const html = md.render(textarea.value);
+          blob = new Blob([html], { type: 'text/html' });
+          filename = 'vizard-export.html';
+        } else if (type === 'json') {
+          const json = JSON.stringify({ markdown: textarea.value }, null, 2);
+          blob = new Blob([json], { type: 'application/json' });
+          filename = 'vizard-export.json';
+        } else {
+          return;
+        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 0);
+      });
     });
   }
 

@@ -31,10 +31,10 @@ x,y
           </pre>
           <span style="font-size:13px; color:#666;">type supports 'table', 'line', 'bar'</span>
         </li>
-        <li>Click <b>Upload CSV file</b> or <b>Upload Markdown file</b> to insert files into the editor.</li>
+        <li>Click <b>Upload csv file</b> or <b>Upload markdown file</b> to insert files into the editor.</li>
         <li>Click <b>Clear data</b> to reset the editor.</li>
         <li>Preview and charts are shown on the right in real time.</li>
-        <li>Use <b>Export</b> to download your work as Markdown.</li>
+  <li>Click <b>Export</b> to download your work as <b>Markdown</b>, <b>HTML</b>, or <b>JSON</b> file.</li>
       </ul>
       <button id="how-to-use-close" style="position: absolute; top: 12px; right: 18px; background: none; border: none; font-size: 22px; color: #888; cursor: pointer;">&times;</button>
     </div>
