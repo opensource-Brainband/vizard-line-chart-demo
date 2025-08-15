@@ -27,12 +27,14 @@ function renderMarkdownApp(root: HTMLElement) {
   const csvBtn = document.getElementById('csv-upload-btn') as HTMLButtonElement | null
   const csvInput = document.getElementById('csv-upload-input') as HTMLInputElement | null
   // CSV 업로드 버튼 이벤트
+  const mdBtn = document.getElementById('md-upload-btn') as HTMLButtonElement | null
+  const mdInput = document.getElementById('md-upload-input') as HTMLInputElement | null
   if (csvBtn && csvInput && textarea) {
     csvBtn.addEventListener('click', () => {
       csvInput.value = '' // 같은 파일 재업로드 허용
       csvInput.click()
     })
-    csvInput.addEventListener('change', (e) => {
+    csvInput.addEventListener('change', () => {
       const file = csvInput.files && csvInput.files[0]
       if (!file) return
       const reader = new FileReader()
@@ -48,6 +50,31 @@ function renderMarkdownApp(root: HTMLElement) {
         textarea.value = before + codeBlock + after
         // 커서 이동 및 프리뷰 갱신
         textarea.selectionStart = textarea.selectionEnd = (before + codeBlock).length
+        textarea.focus()
+        updatePreview(textarea.value)
+      }
+      reader.readAsText(file)
+    })
+  }
+  // 마크다운 업로드 버튼 이벤트 (삽입)
+  if (mdBtn && mdInput && textarea) {
+    mdBtn.addEventListener('click', () => {
+      mdInput.value = ''
+      mdInput.click()
+    })
+    mdInput.addEventListener('change', () => {
+      const file = mdInput.files && mdInput.files[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        const mdText = ev.target?.result as string
+        // 커서 위치에 삽입
+        const start = textarea.selectionStart
+        const end = textarea.selectionEnd
+        const before = textarea.value.substring(0, start)
+        const after = textarea.value.substring(end)
+        textarea.value = before + mdText + after
+        textarea.selectionStart = textarea.selectionEnd = (before + mdText).length
         textarea.focus()
         updatePreview(textarea.value)
       }

@@ -14,6 +14,8 @@ export const getMarkdownAppHtml = (markdownText: string) => `
           <div style="display: flex; align-items: center; gap: 10px;">
             <button id="csv-upload-btn" style="background: #21203C; color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 15px; font-weight: 500; cursor: pointer;">CSV file upload</button>
             <input type="file" id="csv-upload-input" accept=".csv" style="display:none;" />
+            <button id="md-upload-btn" style="background: #21203C; color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 15px; font-weight: 500; cursor: pointer;">Markdown file upload</button>
+            <input type="file" id="md-upload-input" accept=".md,.markdown,text/markdown" style="display:none;" />
           </div>
         </div>
         <div style="flex: 1 1 0; align-self: stretch; padding: 30px; background: #fff; display: flex; flex-direction: column; align-items: center;">
