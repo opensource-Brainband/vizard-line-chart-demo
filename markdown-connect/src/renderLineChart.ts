@@ -12,9 +12,9 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
   const { title, headers, data } = chartData
   const [x, y] = headers
 
-  // x 데이터 중 최대 길이 계산
+  // Calculate the maximum length of x data (label)
   const maxXLen = Math.max(...data.map(d => String(d[x]).length));
-  // 한 글자당 12px, 최소 10px, 최대 180px
+  // Minimum point gap: 10px, maximum: 180px, 7px per character
   const minPointGap = Math.max(10, Math.min(7 * maxXLen, 180));
   const margin = { top: 40, right: 20, bottom: 40, left: 50 };
   const width = Math.max(600, margin.left + margin.right + data.length * minPointGap);
@@ -25,7 +25,7 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .attr('width', width)
     .attr('height', height);
 
-  // Title
+  // Draw chart title
   if (title) {
     svg.append('text')
       .attr('x', width / 2)
@@ -54,20 +54,20 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .domain([0, yMax])
     .range([chartHeight, 0]);
 
-  // X axis
+  // Draw X axis
   const xAxis = d3.axisBottom(xScale)
 
   chartArea.append('g')
     .attr('transform', `translate(0, ${chartHeight})`)
     .call(xAxis)
 
-  // Y axis
+  // Draw Y axis
   const yAxis = d3.axisLeft(yScale).ticks(5)
 
   chartArea.append('g')
     .call(yAxis)
 
-  // X axis label
+  // Draw X axis label
   chartArea.append('text')
     .attr('x', chartWidth / 2)
     .attr('y', chartHeight + 30)
@@ -75,7 +75,7 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .attr('font-size', '12px')
     .text(x)
 
-  // Y axis label
+  // Draw Y axis label
   chartArea.append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -chartHeight / 2)

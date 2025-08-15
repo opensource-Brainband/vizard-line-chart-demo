@@ -12,9 +12,9 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
   const { title, headers, data } = chartData
   const [x, y] = headers
 
-  // x 데이터 중 최대 길이 계산
+  // Calculate the maximum length of x data (label)
   const maxXLen = Math.max(...data.map(d => String(d[x]).length));
-  // 한 글자당 12px, 최소 10px, 최대 180px
+  // Minimum bar width: 10px, maximum: 180px, 7px per character
   const minBarWidth = Math.max(10, Math.min(7 * maxXLen, 180));
   const margin = { top: 40, right: 20, bottom: 40, left: 50 };
   const width = Math.max(600, margin.left + margin.right + data.length * minBarWidth);
@@ -25,7 +25,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('width', width)
     .attr('height', height);
 
-  // Add gradient definition
+  // Add gradient definition for bar fill
   const defs = svg.append('defs')
   const gradient = defs.append('linearGradient')
     .attr('id', 'bar-gradient')
@@ -42,7 +42,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('stop-color', '#6B6A8A') 
     .attr('stop-opacity', 1)
 
-  // Title
+  // Draw chart title
   if (title) {
     svg.append('text')
       .attr('x', width / 2)
@@ -71,16 +71,16 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .domain([0, yMax])
     .range([chartHeight, 0]);
 
-  // X axis
+  // Draw X axis
   chartArea.append('g')
     .attr('transform', `translate(0, ${chartHeight})`)
     .call(d3.axisBottom(xScale))
 
-  // Y axis
+  // Draw Y axis
   chartArea.append('g')
     .call(d3.axisLeft(yScale).ticks(5))
 
-  // X axis label
+  // Draw X axis label
   chartArea.append('text')
     .attr('x', chartWidth / 2)
     .attr('y', chartHeight + 30)
@@ -88,7 +88,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
     .attr('font-size', '12px')
     .text(x)
 
-  // Y axis label
+  // Draw Y axis label
   chartArea.append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -chartHeight / 2)
