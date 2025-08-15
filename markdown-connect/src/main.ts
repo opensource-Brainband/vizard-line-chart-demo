@@ -68,6 +68,24 @@ function renderMarkdownApp(root: HTMLElement) {
   const mdText = document.getElementById('md-upload-text') as HTMLSpanElement | null
   const mdInput = document.getElementById('md-upload-input') as HTMLInputElement | null
   const clearText = document.getElementById('clear-data-text') as HTMLSpanElement | null
+  const exportText = document.getElementById('export-data-text') as HTMLSpanElement | null
+
+  // Export markdown as .md file
+  if (exportText && textarea) {
+    exportText.addEventListener('click', () => {
+      const blob = new Blob([textarea.value], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'vizard-export.md';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 0);
+    });
+  }
 
   if (clearText && textarea) {
     clearText.addEventListener('click', () => {

@@ -7,7 +7,8 @@ export const getMarkdownAppHtml = (markdownText: string) => `
       <input type="file" id="csv-upload-input" accept=".csv" style="display:none;" />
       <span id="md-upload-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Upload Markdown file</span>
       <input type="file" id="md-upload-input" accept=".md,.markdown,text/markdown" style="display:none;" />
-      <span id="clear-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Clear data</span>
+  <span id="clear-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Clear data</span>
+  <span id="export-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Export</span>
       <span id="sidebar-close" style="margin-top: 32px; color: #bbb; font-size: 22px; cursor: pointer;">&times; Close</span>
     </div>
     <!-- Topbar -->
