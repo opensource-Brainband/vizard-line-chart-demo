@@ -24,13 +24,13 @@ function renderMarkdownApp(root: HTMLElement) {
   root.innerHTML = getMarkdownAppHtml(markdownText)
   const textarea = document.getElementById('md-editor') as HTMLTextAreaElement | null
   const preview = document.getElementById('app-preview')
-  const csvBtn = document.getElementById('csv-upload-btn') as HTMLButtonElement | null
+  const csvText = document.getElementById('csv-upload-text') as HTMLSpanElement | null
   const csvInput = document.getElementById('csv-upload-input') as HTMLInputElement | null
   // CSV 업로드 버튼 이벤트
-  const mdBtn = document.getElementById('md-upload-btn') as HTMLButtonElement | null
+  const mdText = document.getElementById('md-upload-text') as HTMLSpanElement | null
   const mdInput = document.getElementById('md-upload-input') as HTMLInputElement | null
-  if (csvBtn && csvInput && textarea) {
-    csvBtn.addEventListener('click', () => {
+  if (csvText && csvInput && textarea) {
+    csvText.addEventListener('click', () => {
       csvInput.value = '' // 같은 파일 재업로드 허용
       csvInput.click()
     })
@@ -57,8 +57,8 @@ function renderMarkdownApp(root: HTMLElement) {
     })
   }
   // 마크다운 업로드 버튼 이벤트 (삽입)
-  if (mdBtn && mdInput && textarea) {
-    mdBtn.addEventListener('click', () => {
+  if (mdText && mdInput && textarea) {
+    mdText.addEventListener('click', () => {
       mdInput.value = ''
       mdInput.click()
     })
