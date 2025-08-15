@@ -24,6 +24,36 @@ function renderMarkdownApp(root: HTMLElement) {
   root.innerHTML = getMarkdownAppHtml(markdownText)
   const textarea = document.getElementById('md-editor') as HTMLTextAreaElement | null
   const preview = document.getElementById('app-preview')
+  const csvBtn = document.getElementById('csv-upload-btn') as HTMLButtonElement | null
+  const csvInput = document.getElementById('csv-upload-input') as HTMLInputElement | null
+  // CSV 업로드 버튼 이벤트
+  if (csvBtn && csvInput && textarea) {
+    csvBtn.addEventListener('click', () => {
+      csvInput.value = '' // 같은 파일 재업로드 허용
+      csvInput.click()
+    })
+    csvInput.addEventListener('change', (e) => {
+      const file = csvInput.files && csvInput.files[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        const csvText = ev.target?.result as string
+        // CSV를 마크다운 코드블록으로 감싸기
+        const codeBlock = `\n\n\`\`\`csv\n${csvText.trim()}\n\`\`\`\n\n`
+        // 커서 위치에 삽입
+        const start = textarea.selectionStart
+        const end = textarea.selectionEnd
+        const before = textarea.value.substring(0, start)
+        const after = textarea.value.substring(end)
+        textarea.value = before + codeBlock + after
+        // 커서 이동 및 프리뷰 갱신
+        textarea.selectionStart = textarea.selectionEnd = (before + codeBlock).length
+        textarea.focus()
+        updatePreview(textarea.value)
+      }
+      reader.readAsText(file)
+    })
+  }
 
   // Update preview area with rendered markdown and charts
   function updatePreview(mdText: string) {
