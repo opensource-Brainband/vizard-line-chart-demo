@@ -14,6 +14,12 @@ const md = createMarkdownRenderer()
 // Render the welcome screen
 function renderWelcome(root: HTMLElement) {
   root.innerHTML = welcomeHtml
+  // Fade-in animation for welcome and button
+  setTimeout(() => {
+    document.querySelectorAll('.vizard-fadein').forEach((el, i) => {
+      setTimeout(() => el.classList.add('vizard-fadein-on'), i * 350);
+    });
+  }, 100);
   const btn = document.getElementById('get-started-btn')
   if (btn) {
     // On click, show the markdown editor/preview UI
