@@ -2,14 +2,15 @@ export const getMarkdownAppHtml = (markdownText: string) => `
   <div id="vizard-root" style="width: 100vw; min-height: 100vh; background: white; overflow: hidden; position: relative;">
     <!-- Sidebar -->
     <div id="sidebar" style="position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: #232336; color: #fff; z-index: 200; display: flex; flex-direction: column; align-items: flex-start; padding-top: 32px; padding-left: 24px; box-shadow: 2px 0 16px rgba(0,0,0,0.08); transform: translateX(-100%); transition: transform 0.3s cubic-bezier(.4,0,.2,1);">
-      <div style="font-size: 28px; font-weight: 700; margin-bottom: 32px; letter-spacing: 2px;">MENU</div>
+  <div style="font-size: 28px; font-weight: 700; margin-bottom: 32px; letter-spacing: 2px;">MENU</div>
+  <span id="how-to-use-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px; font-weight: 600;">How to use</span>
       <span id="csv-upload-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Upload CSV file</span>
       <input type="file" id="csv-upload-input" accept=".csv" style="display:none;" />
       <span id="md-upload-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Upload Markdown file</span>
       <input type="file" id="md-upload-input" accept=".md,.markdown,text/markdown" style="display:none;" />
   <span id="clear-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Clear data</span>
-  <span id="export-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Export</span>
-      <span id="sidebar-close" style="margin-top: 32px; color: #bbb; font-size: 22px; cursor: pointer;">&times; Close</span>
+  <span id="export-data-text" style="color: #fff; cursor: pointer; font-size: 18px; margin-bottom: 18px;">Export md file</span>
+  <span id="sidebar-close" style="color: #fff; cursor: pointer; font-size: 18px; margin-top: 36px;">Close sidebar</span>
     </div>
     <!-- Topbar -->
     <div style="align-self: stretch; height: 80px; padding: 20px; background: #21203C; overflow: hidden; justify-content: flex-start; align-items: center; display: flex; position: relative; z-index: 101;">

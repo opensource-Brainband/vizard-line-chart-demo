@@ -6,6 +6,7 @@ import { renderTable } from './renderTable.ts'
 import markdownText from '../docs/test.md?raw'
 import { welcomeHtml } from './views/welcomeHtml'
 import { getMarkdownAppHtml } from './views/markdownAppHtml'
+import { showHowToUseModal } from './utils/showHowToUseModal'
 
 const md = createMarkdownRenderer()
 
@@ -22,6 +23,11 @@ function renderWelcome(root: HTMLElement) {
 // Render the markdown editor/preview UI
 function renderMarkdownApp(root: HTMLElement) {
   root.innerHTML = getMarkdownAppHtml(markdownText)
+  // How to use modal (imported)
+  const howToUseText = document.getElementById('how-to-use-text') as HTMLSpanElement | null;
+  if (howToUseText) {
+    howToUseText.addEventListener('click', showHowToUseModal);
+  }
   // Sidebar elements
   const sidebar = document.getElementById('sidebar')
   const menuIcon = document.getElementById('menu-icon')
