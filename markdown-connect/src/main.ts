@@ -26,12 +26,20 @@ function renderMarkdownApp(root: HTMLElement) {
   const preview = document.getElementById('app-preview')
   const csvText = document.getElementById('csv-upload-text') as HTMLSpanElement | null
   const csvInput = document.getElementById('csv-upload-input') as HTMLInputElement | null
-  // CSV 업로드 버튼 이벤트
   const mdText = document.getElementById('md-upload-text') as HTMLSpanElement | null
   const mdInput = document.getElementById('md-upload-input') as HTMLInputElement | null
+  const clearText = document.getElementById('clear-data-text') as HTMLSpanElement | null
+
+  if (clearText && textarea) {
+    clearText.addEventListener('click', () => {
+      textarea.value = ''
+      textarea.focus()
+      updatePreview('')
+    })
+  }
   if (csvText && csvInput && textarea) {
     csvText.addEventListener('click', () => {
-      csvInput.value = '' // 같은 파일 재업로드 허용
+      csvInput.value = '' // Allow re-uploading the same file
       csvInput.click()
     })
     csvInput.addEventListener('change', () => {
@@ -40,15 +48,12 @@ function renderMarkdownApp(root: HTMLElement) {
       const reader = new FileReader()
       reader.onload = (ev) => {
         const csvText = ev.target?.result as string
-        // CSV를 마크다운 코드블록으로 감싸기
         const codeBlock = `\n\n\`\`\`csv\n${csvText.trim()}\n\`\`\`\n\n`
-        // 커서 위치에 삽입
         const start = textarea.selectionStart
         const end = textarea.selectionEnd
         const before = textarea.value.substring(0, start)
         const after = textarea.value.substring(end)
         textarea.value = before + codeBlock + after
-        // 커서 이동 및 프리뷰 갱신
         textarea.selectionStart = textarea.selectionEnd = (before + codeBlock).length
         textarea.focus()
         updatePreview(textarea.value)
@@ -56,7 +61,6 @@ function renderMarkdownApp(root: HTMLElement) {
       reader.readAsText(file)
     })
   }
-  // 마크다운 업로드 버튼 이벤트 (삽입)
   if (mdText && mdInput && textarea) {
     mdText.addEventListener('click', () => {
       mdInput.value = ''
@@ -68,7 +72,6 @@ function renderMarkdownApp(root: HTMLElement) {
       const reader = new FileReader()
       reader.onload = (ev) => {
         const mdText = ev.target?.result as string
-        // 커서 위치에 삽입
         const start = textarea.selectionStart
         const end = textarea.selectionEnd
         const before = textarea.value.substring(0, start)

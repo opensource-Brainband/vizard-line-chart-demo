@@ -5,10 +5,11 @@ export const getMarkdownAppHtml = (markdownText: string) => `
         <span style="font-weight: 500;">Vizard</span> <span style="font-weight: 300;">Editor</span>
       </div>
   <div style="display: flex; align-items: center; gap: 36px; font-size: 16px;">
-        <span id="csv-upload-text" style="color: #fff; cursor: pointer; font-size: 20px;">CSV file upload</span>
+        <span id="csv-upload-text" style="color: #fff; cursor: pointer; font-size: 20px;">Upload CSV file</span>
         <input type="file" id="csv-upload-input" accept=".csv" style="display:none;" />
-        <span id="md-upload-text" style="color: #fff; cursor: pointer; font-size: 20px;">Markdown file upload</span>
+        <span id="md-upload-text" style="color: #fff; cursor: pointer; font-size: 20px;">Upload Markdown file</span>
         <input type="file" id="md-upload-input" accept=".md,.markdown,text/markdown" style="display:none;" />
+        <span id="clear-data-text" style="color: #fff; cursor: pointer; font-size: 20px;">Clear data</span>
       </div>
     </div>
     <div style="flex: 1 1 0; width: 100%; max-width: 1440px; margin: 0 auto; display: flex; align-items: stretch; justify-content: center; background: white;">
