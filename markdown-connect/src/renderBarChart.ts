@@ -12,7 +12,7 @@ export function renderBarChart(container: HTMLElement, chartData: BarChartData) 
   const { title, headers, data } = chartData
   const [x, y] = headers
 
-  const width = 400
+  const width = 600
   const height = 250
   const margin = { top: 40, right: 20, bottom: 40, left: 50 }
 
