@@ -12,16 +12,20 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
   const { title, headers, data } = chartData
   const [x, y] = headers
 
-  const width = 400
-  const height = 250
-  const margin = { top: 40, right: 20, bottom: 40, left: 50 }
+  // Calculate the maximum length of x data (label)
+  const maxXLen = Math.max(...data.map(d => String(d[x]).length));
+  // Minimum point gap: 10px, maximum: 180px, 7px per character
+  const minPointGap = Math.max(10, Math.min(7 * maxXLen, 180));
+  const margin = { top: 40, right: 20, bottom: 40, left: 50 };
+  const width = Math.max(600, margin.left + margin.right + data.length * minPointGap);
+  const height = 250;
 
   const svg = d3.select(container)
     .append('svg')
     .attr('width', width)
-    .attr('height', height)
+    .attr('height', height);
 
-  // Title
+  // Draw chart title
   if (title) {
     svg.append('text')
       .attr('x', width / 2)
@@ -32,38 +36,38 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
       .text(title)
   }
 
-  const chartWidth = width - margin.left - margin.right
-  const chartHeight = height - margin.top - margin.bottom
+  const chartWidth = width - margin.left - margin.right;
+  const chartHeight = height - margin.top - margin.bottom;
 
   const chartArea = svg.append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`)
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-  const xDomain = data.map(d => String(d[x]))
-  const yMax = d3.max(data, d => Number(d[y])) ?? 100
+  const xDomain = data.map(d => String(d[x]));
+  const yMax = d3.max(data, d => Number(d[y])) ?? 100;
 
   const xScale = d3.scalePoint<string>()
     .domain(xDomain)
     .range([0, chartWidth])
-    .padding(0.5)
+    .padding(0.5);
 
   const yScale = d3.scaleLinear()
     .domain([0, yMax])
-    .range([chartHeight, 0])
+    .range([chartHeight, 0]);
 
-  // X axis
+  // Draw X axis
   const xAxis = d3.axisBottom(xScale)
 
   chartArea.append('g')
     .attr('transform', `translate(0, ${chartHeight})`)
     .call(xAxis)
 
-  // Y axis
+  // Draw Y axis
   const yAxis = d3.axisLeft(yScale).ticks(5)
 
   chartArea.append('g')
     .call(yAxis)
 
-  // X axis label
+  // Draw X axis label
   chartArea.append('text')
     .attr('x', chartWidth / 2)
     .attr('y', chartHeight + 30)
@@ -71,7 +75,7 @@ export function renderLineChart(container: HTMLElement, chartData: LineChartData
     .attr('font-size', '12px')
     .text(x)
 
-  // Y axis label
+  // Draw Y axis label
   chartArea.append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -chartHeight / 2)

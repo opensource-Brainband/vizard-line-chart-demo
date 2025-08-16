@@ -1,3 +1,11 @@
+/* Vizard Welcome fade-in animation */
+.vizard-fadein {
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
+}
+.vizard-fadein.vizard-fadein-on {
+  opacity: 1;
+}
 /* Base style: entire page */
 body {
   font-family: Arial, sans-serif;
@@ -17,6 +25,37 @@ body {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar and overlay styles */
+#sidebar {
+  box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 200;
+}
+#sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.15);
+  z-index: 150;
+}
+#main-content {
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 100;
+}
+
+@media (max-width: 700px) {
+  #sidebar {
+    width: 80vw !important;
+    min-width: 0 !important;
+    padding-left: 10vw !important;
+  }
+  #main-content {
+    max-width: 100vw !important;
+  }
 }
 
 /* Markdown text style */
@@ -39,6 +78,19 @@ code {
 /* .dsl-chart: area for rendering charts */
 .dsl-chart {
   margin-top: 20px;
+  width: 600px;
+  min-width: 600px;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.dsl-chart svg,
+.dsl-chart table {
+  display: block;
+  min-width: 600px;
+  box-sizing: border-box;
 }
 
 /* SVG chart style */
