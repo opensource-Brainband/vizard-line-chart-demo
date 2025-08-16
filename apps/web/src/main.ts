@@ -1,5 +1,5 @@
 import './style.css'
-import { createMarkdownRenderer, renderLineChart, renderBarChart, renderTable } from '@core';
+import { createMarkdownRenderer, renderLineChart, renderBarChart, renderTable } from '../../../packages/core/src';
 import markdownText from '../docs/test.md?raw'
 import { welcomeHtml } from './views/welcomeHtml'
 import { getMarkdownAppHtml } from './views/markdownAppHtml'
@@ -70,15 +70,20 @@ function renderMarkdownApp(root: HTMLElement) {
 	if (menuIcon) menuIcon.addEventListener('click', openSidebar);
 	if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
 
-	// Editor/preview/file upload logic
-	const textarea = document.getElementById('md-editor') as HTMLTextAreaElement | null
-	const preview = document.getElementById('app-preview')
-	const csvText = document.getElementById('csv-upload-text') as HTMLSpanElement | null
-	const csvInput = document.getElementById('csv-upload-input') as HTMLInputElement | null
-	const mdText = document.getElementById('md-upload-text') as HTMLSpanElement | null
-	const mdInput = document.getElementById('md-upload-input') as HTMLInputElement | null
-	const clearText = document.getElementById('clear-data-text') as HTMLSpanElement | null
-	const exportText = document.getElementById('export-data-text') as HTMLSpanElement | null
+		// Editor/preview/file upload logic
+		const textarea = document.getElementById('md-editor') as HTMLTextAreaElement | null
+		const preview = document.getElementById('app-preview')
+		const csvText = document.getElementById('csv-upload-text') as HTMLSpanElement | null
+		const csvInput = document.getElementById('csv-upload-input') as HTMLInputElement | null
+		const mdText = document.getElementById('md-upload-text') as HTMLSpanElement | null
+		const mdInput = document.getElementById('md-upload-input') as HTMLInputElement | null
+		const clearText = document.getElementById('clear-data-text') as HTMLSpanElement | null
+		const exportText = document.getElementById('export-data-text') as HTMLSpanElement | null
+
+		// 명시적으로 textarea에 markdownText를 할당 (HTML 템플릿에서 줄바꿈/공백 문제 방지)
+		if (textarea) {
+			textarea.value = markdownText;
+		}
 
 	// Export: show modal to select format
 	if (exportText && textarea) {
@@ -196,14 +201,14 @@ function renderMarkdownApp(root: HTMLElement) {
 		}
 	}
 
-	if (textarea) {
-		// Initial preview
-		updatePreview(textarea.value)
-		// Live update on textarea input
-		textarea.addEventListener('input', (e) => {
-			updatePreview((e.target as HTMLTextAreaElement).value)
-		})
-	}
+		if (textarea) {
+			// Initial preview
+			updatePreview(textarea.value);
+			// Live update on textarea input
+			textarea.addEventListener('input', (e) => {
+				updatePreview((e.target as HTMLTextAreaElement).value)
+			})
+		}
 }
 
 // App entrypoint: show welcome screen on load

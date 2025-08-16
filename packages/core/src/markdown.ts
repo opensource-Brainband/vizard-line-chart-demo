@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it'
-import parseCSV from './parseCSV'
+import parseCSV from './parseDSL'
                       
 export function createMarkdownRenderer(): MarkdownIt {
 	const md = new MarkdownIt()
